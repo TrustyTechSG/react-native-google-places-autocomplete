@@ -567,7 +567,11 @@ export const GooglePlacesAutocomplete = forwardRef((props, ref) => {
       request.withCredentials = requestShouldUseWithCredentials();
       setRequestHeaders(request, getRequestHeaders(props.requestUrl));
 
-      request.send();
+if (request.readyState === 1) {
+        request.send();
+} else {
+        console.warn('google places autocomplete: attempt to send unopened request failed');
+}
     } else {
       _results = [];
       setDataSource(buildRowsFromResults([]));
